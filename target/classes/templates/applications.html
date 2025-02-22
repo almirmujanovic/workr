@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Applications - JobTrail</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<!-- ✅ Navbar Fix -->
+<div class="navbar">
+    <a th:href="@{/}" style="text-decoration: none; color: inherit;">
+        <strong>JobTrail</strong>
+    </a>
+    <div>
+        <span th:if="${#authorization.expression('isAuthenticated()')}">
+            Hello, <span th:text="${#authentication.name}"></span>!
+            <a th:href="@{/logout}">Logout</a>
+        </span>
+
+        <span th:if="${#authorization.expression('isAnonymous()')}">
+            <a th:href="@{/users/register}">Register</a>
+            <a th:href="@{/login}">Login</a>
+        </span>
+
+        <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <a th:href="@{/applications}">Applications</a>
+        </span>
+    </div>
+</div>
+
+
+<!-- ✅ Applications List -->
+<div class="container">
+    <h1>Job Applications</h1>
+    <table>
+        <tr>
+            <th>Job Title</th>
+            <th>Applicant</th>
+            <th>Application Text</th>
+        </tr>
+        <tr th:each="application : ${applications}">
+            <td th:text="${application.job.title}"></td>
+            <td th:text="${application.user.username}"></td>
+            <td th:text="${application.applicationText}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

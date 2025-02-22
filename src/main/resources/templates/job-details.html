@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Job Details - JobTrail</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<!-- ✅ Navbar Fix -->
+<div class="navbar">
+    <a th:href="@{/}" style="text-decoration: none; color: inherit;">
+        <strong>JobTrail</strong>
+    </a>
+    <div>
+        <span th:if="${#authorization.expression('isAuthenticated()')}">
+            Hello, <span th:text="${#authentication.name}"></span>!
+            <a th:href="@{/logout}">Logout</a>
+        </span>
+
+        <span th:if="${#authorization.expression('isAnonymous()')}">
+            <a th:href="@{/users/register}">Register</a>
+            <a th:href="@{/login}">Login</a>
+        </span>
+
+        <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <a th:href="@{/applications}">Applications</a>
+        </span>
+    </div>
+</div>
+
+
+<!-- ✅ Job Details -->
+<div class="container">
+    <h1 th:text="${job.title}"></h1>
+    <p th:text="${job.description}"></p>
+
+    <!-- ✅ Apply Button for Users -->
+    <form th:action="@{/jobs/apply/{id}(id=${job.id})}" method="post" sec:authorize="hasRole('USER')">
+        <label for="applicationText">Why should you be hired?</label>
+        <textarea id="applicationText" name="applicationText" required></textarea>
+        <button type="submit">Apply</button>
+    </form>
+</div>
+
+</body>
+</html>
