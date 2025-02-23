@@ -11,46 +11,26 @@ public class Application {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "job_id", nullable = false)
-    private Job job;
+    @JoinColumn(name = "job_id")
+    private Job job; // ✅ FIXED: Ensure it's `Job`, not `JobDto`
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @NotBlank(message = "Application text is mandatory")
     private String applicationText;
 
-    // ✅ Add missing Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    // ✅ Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Job getJob() { return job; }
+    public void setJob(Job job) { this.job = job; } // ✅ FIXED: Ensure `Job` is used
 
-    public Job getJob() {
-        return job;
-    }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
-    public void setJob(Job job) {
-        this.job = job;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getApplicationText() {
-        return applicationText;
-    }
-
-    public void setApplicationText(String applicationText) {
-        this.applicationText = applicationText;
-    }
+    public String getApplicationText() { return applicationText; }
+    public void setApplicationText(String applicationText) { this.applicationText = applicationText; }
 }

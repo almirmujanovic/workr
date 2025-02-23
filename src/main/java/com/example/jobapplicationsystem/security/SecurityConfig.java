@@ -20,7 +20,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/jobs", "/users/register", "/css/**", "/login").permitAll()
-                        .requestMatchers("/jobs/new", "/jobs/edit/**", "/jobs/delete/**").hasRole("ADMIN")
+                        .requestMatchers("/jobs/new", "/jobs/edit/**", "/jobs/delete/**").hasRole("ADMIN") // ✅ Ensure hasRole('ADMIN') matches DB
+                        .requestMatchers("/applications").hasRole("ADMIN")
                         .requestMatchers("/jobs/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -28,7 +29,7 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/", true)
-                        .failureUrl("/login?error=true") // ✅ Redirect to login page with error message
+                        .failureUrl("/login?error=true") // ✅ Show login errors
                         .permitAll()
                 )
                 .logout(logout -> logout

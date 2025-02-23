@@ -9,6 +9,7 @@ com\example\jobapplicationsystem\service\ApplicationService.class
 com\example\jobapplicationsystem\dto\UserDto.class
 com\example\jobapplicationsystem\model\UserRole.class
 com\example\jobapplicationsystem\JobApplicationSystemApplication.class
+com\example\jobapplicationsystem\controller\ApplicationController.class
 com\example\jobapplicationsystem\security\CustomUserDetails.class
 com\example\jobapplicationsystem\security\CustomUserDetailsService.class
 com\example\jobapplicationsystem\service\UserService.class

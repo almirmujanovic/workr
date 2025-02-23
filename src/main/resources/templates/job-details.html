@@ -1,47 +1,42 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Job Details - JobTrail</title>
+    <title>Job Details</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<h1 th:text="${job.title}"></h1>
+<p th:text="${job.description}"></p>
 
-<!-- ✅ Navbar Fix -->
-<div class="navbar">
-    <a th:href="@{/}" style="text-decoration: none; color: inherit;">
-        <strong>JobTrail</strong>
-    </a>
-    <div>
-        <span th:if="${#authorization.expression('isAuthenticated()')}">
-            Hello, <span th:text="${#authentication.name}"></span>!
-            <a th:href="@{/logout}">Logout</a>
-        </span>
+<form th:action="@{/applications/apply/{jobId}(jobId=${job.id})}" method="post">
+    <label for="applicationText">Why do you want this job?</label>
+    <textarea id="applicationText" name="applicationText" required></textarea>
+    <button type="submit">Apply</button>
+</form>
 
-        <span th:if="${#authorization.expression('isAnonymous()')}">
-            <a th:href="@{/users/register}">Register</a>
-            <a th:href="@{/login}">Login</a>
-        </span>
-
-        <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-            <a th:href="@{/applications}">Applications</a>
-        </span>
+<!-- ✅ Success Popup Message (Hidden by Default) -->
+<div id="success-popup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <p>Application submitted successfully!</p>
+        <button onclick="closePopup()">OK</button>
     </div>
 </div>
 
+<!-- ✅ JavaScript for Showing the Popup -->
+<script>
+    function showPopup() {
+        document.getElementById("success-popup").style.display = "flex";
+    }
+    function closePopup() {
+        document.getElementById("success-popup").style.display = "none";
+    }
 
-<!-- ✅ Job Details -->
-<div class="container">
-    <h1 th:text="${job.title}"></h1>
-    <p th:text="${job.description}"></p>
-
-    <!-- ✅ Apply Button for Users -->
-    <form th:action="@{/jobs/apply/{id}(id=${job.id})}" method="post" sec:authorize="hasRole('USER')">
-        <label for="applicationText">Why should you be hired?</label>
-        <textarea id="applicationText" name="applicationText" required></textarea>
-        <button type="submit">Apply</button>
-    </form>
-</div>
-
+    // ✅ Show popup if success flag exists
+    window.onload = function () {
+        if (window.location.search.includes("success=ApplicationSubmitted")) {
+            showPopup();
+        }
+    };
+</script>
 </body>
 </html>
