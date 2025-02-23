@@ -1,0 +1,46 @@
+# 🛑 Ignore target folder (Maven build files)
+target/
+
+# 🛑 Ignore IntelliJ IDEA project files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# 🛑 Ignore compiled Java class files
+*.class
+
+# 🛑 Ignore logs and temp files
+logs/
+*.log
+*.tmp
+
+# 🛑 Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# 🛑 Ignore environment and security-sensitive files
+.env
+*.env
+*.key
+*.pem
+
+# 🛑 Ignore database credentials (if any)
+application.properties
+application.yml
+
+# 🛑 Ignore data dumps and database files
+*.sql
+*.sqlite
+*.db
+
+# 🛑 Ignore Maven dependencies (optional if you want a clean repo)
+.mvn/
+mvnw
+mvnw.cmd
+
+# 🛑 Ignore IDE-specific files (VSCode, Eclipse, etc.)
+.vscode/
+.project
+.classpath
+.settings/
